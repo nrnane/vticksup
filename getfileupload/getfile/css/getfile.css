@@ -1,0 +1,114 @@
+/*
+ *	GetFile v4.0 - 2015-06-16
+ *	jQuery Upload Plugin
+ *	(c) 2015 Syscover S.L. - http://www.syscover.com/
+ *	All rights reserved
+ */
+
+/* Preloader */
+@media screen {
+    div#preloader {
+        position: absolute;
+        left: -9999px;
+        top:  -9999px;
+    }
+    div#preloader img {
+        display: block;
+    }
+}
+
+/* botton */
+.btngf-getFile input {
+    position: absolute;
+    margin: -26px -12px 0 0px;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    display: inline;
+}
+
+/* drop zone style */
+.drop-zone
+{
+    height: 100px;
+    line-height: 100px;
+    border: 2px dashed #bbb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    min-height: 50px;
+    color: #bbb;
+    text-align: center;
+    font-size: 35px;
+    ertical-align: middle;
+}
+
+@media (min-width: 992px){
+    .modal-lg {
+        width: 980px !important;
+    }
+}
+
+@media (min-width: 1200px){
+    .modal-lg {
+        width: 1180px !important;
+    }
+}
+
+/* Content */
+.img-container,
+.img-preview {
+    background-color: #f7f7f7;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+.img-container {
+    min-height: 200px;
+    max-height: 466px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .img-container {
+        min-height: 466px;
+    }
+}
+
+.img-container > img {
+    max-width: 100%;
+}
+
+.img-preview {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.img-preview > img {
+    max-width: 100%;
+}
+
+.preview-lg {
+    width: 263px;
+    height: 148px;
+}
+
+.preview-md {
+    width: 139px;
+    height: 78px;
+}
+
+.preview-sm {
+    width: 69px;
+    height: 39px;
+}
+
+.preview-xs {
+    width: 35px;
+    height: 20px;
+    margin-right: 0;
+}
+

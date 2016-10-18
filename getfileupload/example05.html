@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Example 05 - GetFile with crop and resize</title>
+        <meta name="author" content="Syscover">
+        <meta name="robots" content="INDEX,FOLLOW">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="getfile/libs/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="getfile/libs/bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="getfile/libs/cropper/cropper.css">
+        <link rel="stylesheet" href="getfile/libs/filedrop/filedrop.css">
+        <link rel="stylesheet" href="getfile/libs/jquery.tags/jquery.tagsinput.css">
+        <link rel="stylesheet" href="getfile/css/getfile.css">
+
+        <script type="text/javascript" src="getfile/libs/jquery/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="getfile/libs/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="getfile/libs/cropper/cropper.min.js"></script>
+        <script type="text/javascript" src="getfile/libs/cssloader/js/jquery.cssloader.min.js"></script>
+        <script type="text/javascript" src="getfile/libs/mobiledetect/mdetect.min.js"></script>
+        <script type="text/javascript" src="getfile/libs/filedrop/filedrop.min.js"></script>
+        <script type="text/javascript" src="getfile/libs/jquery.tags/jquery.tagsinput.min.js"></script>
+        <script type="text/javascript" src="getfile/js/jquery.getfile.js"></script>
+
+        <!-- Script getFile -->
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+                $('#showAgain01').hide();
+                $('#showAgain02').hide();
+
+                $('#loadSrc01').hide();
+                $('#loadSrc02').hide();
+
+
+                $('#showAgain01').on('click', function(){
+                    $('#imageLoaded01').getFile().showCropWindow();
+                });
+                $('#showAgain02').on('click', function(){
+                    $('#imageLoaded02').getFile().showCropWindow();
+                });
+
+                $('#imageLoaded01').getFile(
+                    {
+                        urlPlugin:          '.',
+                        folder:             '/html/getuploadfiles/public', // url from doucument root just public folder
+                        tmpFolder:          '/html/getuploadfiles/tmp', // url from doucument root just tmp folder
+                        encryption:         true,
+                        outputExtension:    'jpg',
+                        mimesAccept:    [
+                            'image/*'
+                        ],
+                        crop: {
+                            active:         true,
+                            width:          1500,
+                            height:         1500
+                        },
+                        copies: [
+                            {
+                                width:                  600,
+                                height:                 600,
+                                folder:                 '/html/getuploadfiles/public/medium',
+                                outputExtension:        'jpg'
+                            },
+                            {
+                                width:                  250,
+                                height:                 250,
+                                folder:                 '/html/getuploadfiles/public/thumbnail',
+                                outputExtension:        'jpg'
+                            }
+                        ]
+                    },
+                    function(data)
+                    {
+                        if(data.success && data.action == "loading")
+                        {
+                            $('#progressBar').html(data.percentage + '%');
+                            $('#progressBar').attr('aria-valuenow', data.percentage);
+                            $('#progressBar').css('width', data.percentage + '%');
+                        }
+                        else
+                        {
+                            $('#title01').html('Response Getfile crop y resize');
+                            $('#response01').html(syntaxHighlight(JSON.stringify(data, null, "\t")));
+
+                            if(data.success)
+                            {
+                                // START CODE CROP FROM SRC
+                                $('#loadSrc01').on('click', function() {
+                                    $.getFile(
+                                        {
+                                            urlPlugin:          '.',
+                                            folder:             '/html/getuploadfiles/public',                   // url where do you wanl put your file
+                                            srcFolder:          '/html/getuploadfiles/public',                   // url where is the folder to load image
+                                            srcFile:            data.name,                              // name of image to load
+                                            encryption:         true,
+                                            outputExtension:    'jpg',
+                                            crop: {
+                                                active:         true,
+                                                width:          1500,
+                                                height:         1500
+                                            },
+                                            copies: [
+                                                {
+                                                    width:  600,
+                                                    height: 600,
+                                                    constrainProportions: true,
+                                                    folder: '/html/getuploadfiles/public/medium', // url from doucument root just public folder
+                                                    outputExtension: 'jpg'
+                                                },
+                                                {
+                                                    width:  250,
+                                                    height: 250,
+                                                    folder: '/html/getuploadfiles/public/thumbnail', // url from doucument root just public folder
+                                                    outputExtension: 'jpg'
+                                                }
+                                            ]
+                                        },
+                                        function (data2) {
+                                            if (data2.success) {
+                                                $('#title01').html('Response Getfile crop y resize 01');
+                                                $('#response01').html(syntaxHighlight(JSON.stringify(data2, null, "\t")));
+
+                                                $('#showAgain01').fadeIn();
+                                            }
+                                        }
+                                    );
+                                });
+
+                                $('#showAgain01').fadeIn();
+                                $('#loadSrc01').fadeIn();
+
+                                // END CROP FROM SRC
+                            }
+                        }
+                    }
+                );
+                
+                $('#imageLoaded02').getFile(
+                    {
+                        urlPlugin:          '.',
+                        folder:             '/html/getuploadfiles/public', // url from doucument root just public folder
+                        tmpFolder:          '/html/getuploadfiles/tmp', // url from doucument root just tmp folder
+                        encryption:         true,
+                        outputExtension:    'jpg',
+                        mimesAccept:    [
+                            'image/*'
+                        ],
+                        crop: {
+                            active:         true,
+                            width:          1200,
+                            height:         1150
+                        },
+                        copies: [
+                            {
+                                width:                  700,
+                                height:                 550,
+                                constrainProportions:   true,
+                                folder:                 '/html/getuploadfiles/public/medium', // url from doucument root just public folder
+                                outputExtension:        'jpg'
+                            },
+                            {
+                                width:                  250,
+                                height:                 150,
+                                folder:                 '/html/getuploadfiles/public/thumbnail', // url from doucument root just public folder
+                                outputExtension:        'jpg'
+                            }
+                        ]
+                    },
+                    function(data)
+                    {
+                        if(data.success && data.action == "loading")
+                        {
+                            $('#progressBar').html(data.percentage + '%');
+                            $('#progressBar').attr('aria-valuenow', data.percentage);
+                            $('#progressBar').css('width', data.percentage + '%');
+                        }
+                        else
+                        {
+                            if(data.success)
+                            {
+                                // START CODE CROP FROM SRC
+                                $('#loadSrc02').on('click', function() {
+                                    $.getFile(
+                                        {
+                                            urlPlugin: '.',
+                                            folder: '/html/getuploadfiles/public',               // url where do you wanl put your file
+                                            srcFolder: '/html/getuploadfiles/public',            // url where is the folder to load image
+                                            srcFile:    data.name,                      // name of image to load
+                                            encryption: true,
+                                            outputExtension: 'jpg',
+                                            mimesAccept: [
+                                                'image/*'
+                                            ],
+                                            crop: {
+                                                active: true,
+                                                width: 1200,
+                                                height: 1150
+                                            },
+                                            copies: [
+                                                {
+                                                    width: 700,
+                                                    height: 550,
+                                                    folder: '/html/getuploadfiles/public/medium', // url from doucument root just public folder
+                                                    outputExtension: 'jpg'
+                                                },
+                                                {
+                                                    width: 250,
+                                                    height: 150,
+                                                    folder: '/html/getuploadfiles/public/thumbnail', // url from doucument root just public folder
+                                                    outputExtension: 'jpg'
+                                                }
+                                            ]
+                                        },
+                                        function (data2) {
+                                            if (data2.success) {
+
+                                                $('#title01').html('Response Getfile crop y resize 02');
+                                                $('#response01').html(syntaxHighlight(JSON.stringify(data2, null, "\t")));
+
+                                                $('#showAgain02').fadeIn();
+                                            }
+                                        }
+                                    );
+                                });
+
+                                $('#showAgain02').fadeIn();
+                                $('#loadSrc02').fadeIn();
+                                // END CROP FROM SRC
+                            }
+                        }
+                    }
+                );
+                // END CROP FROM SRC
+            });
+
+            function deleteFile(reference, url)
+            {
+                reference.delete(url, function(data)
+                {
+                    $('#title01').html('Delete File');
+                    $('#response01').html(syntaxHighlight(JSON.stringify(data, null, "\t")));
+                });
+            }
+
+            function syntaxHighlight(json)
+            {
+                if (typeof json != 'string') {
+                    json = JSON.stringify(json, undefined, 2);
+                }
+                json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                    var cls = 'number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                        } else {
+                            cls = 'string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <br>
+        <div id="testAContainer" class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="progress">
+                        <div id="progressBar" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><div id="newImg1"></div></div>
+
+                <div class="col-md-2 col-md-offset-1">
+                    <div id="imageLoaded01" class="btn btn-primary btngf-getFile">Push to Get File (01)</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="showAgain01" class="btn btn-primary">Show again (01)</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="loadSrc01" class="btn btn-primary">Crop from src (01)</div>
+                </div>
+
+
+                <div class="col-md-2"><div id="newImg1Load"></div></div>
+            </div>
+            <br><br><br><br>
+            <div class="row">
+                <div class="col-md-2"><div id="newImg2"></div></div>
+
+                <div class="col-md-2 col-md-offset-1">
+                    <div id="imageLoaded02" class="btn btn-primary btngf-getFile">Push to Get File (02)</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="showAgain02" class="btn btn-primary">Show again (02)</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="loadSrc02" class="btn btn-primary">Crop from src (02)</div>
+                </div>
+
+                <div class="col-md-2"><div id="newImg2Load"></div></div>
+            </div>
+
+            <!-- LOG -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 id="title01"></h4>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <pre id="response01"></pre>
+                </div>
+            </div>
+            <!-- LOG -->
+        </div>
+    </body>
+</html>
