@@ -1,5 +1,0 @@
-vl{b5.Np0ZF-
-farmfres_maindb
-http:\\/\\/localhost:8090\\/thefarmfresh\\/
-
-http://localhost:8090/thefarmfresh
